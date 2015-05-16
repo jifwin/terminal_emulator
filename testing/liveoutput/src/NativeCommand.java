@@ -1,8 +1,3 @@
-package com.example.grzegorz.terminalemulator;
-
-import android.util.Log;
-
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -15,7 +10,6 @@ public class NativeCommand extends Command {
 
     public NativeCommand(String cmd) {
         super(cmd);
-
     }
 
     @Override
@@ -39,32 +33,26 @@ public class NativeCommand extends Command {
 
             runtime = Runtime.getRuntime();
 
-
             try {
                 process = runtime.exec(cmd.split(" "));
-                is = process.getInputStream();
-                es = process.getErrorStream();
-                os = process.getOutputStream();
-                notify();
-
-                process.waitFor();
-                System.out.println("koniec procesu");
-
-
             } catch (IOException e) {
-                Log.d("RUNTIME", "ERROR IN RUNTIME EXEC");
-                es = new ByteArrayInputStream("No such command".getBytes());
-                is = new ByteArrayInputStream("".getBytes());
-
-                notify();
-                e.printStackTrace();
-            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
 
+
+            assert process != null;
+            is = process.getInputStream();
+            es = process.getErrorStream();
+            os = process.getOutputStream();
+            notify();
         }
 
 
-
+        try {
+            process.waitFor();
+            System.out.println("koniec procesu");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

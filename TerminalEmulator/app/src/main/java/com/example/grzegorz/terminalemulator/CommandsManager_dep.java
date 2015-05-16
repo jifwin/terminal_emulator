@@ -6,15 +6,15 @@ import java.util.List;
 /**
  * Created by grzegorz on 09.05.15.
  */
-public class CommandsManager {
+public class CommandsManager_dep {
 
 
-    private List<Command> commands = new ArrayList<Command>();
+    private List<Command_dep> commands = new ArrayList<Command_dep>();
 
-    public CommandsManager() {
+    public CommandsManager_dep() {
     }
 
-    public void registerCommand(Command command){
+    public void registerCommand(Command_dep command){
         commands.add(command);
     }
 
@@ -22,8 +22,8 @@ public class CommandsManager {
         return commands.toString();
     }
 
-    public Command getCommand(String name) {
-        for (Command command : commands) {
+    public Command_dep getCommand(String name) {
+        for (Command_dep command : commands) {
             if (command.name.equals(name)) {
                 return command;
             }

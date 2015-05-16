@@ -1,20 +1,16 @@
 package com.example.grzegorz.terminalemulator;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.Button;
+import android.widget.EditText;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.List;
+import java.lang.reflect.InvocationTargetException;
+
 
 
 public class MainActivity extends ActionBarActivity {
@@ -23,6 +19,43 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        final MainActivity ma = this;
+
+
+        Button bt = (Button) findViewById(R.id.button);
+        final EditText et = (EditText) findViewById(R.id.editText);
+        bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                CommandExecutor ce = new CommandExecutor(ma);
+                try {
+
+                    ce.executeCommand(et.getText().toString(), ma);
+
+                } catch (NoSuchMethodException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                } catch (InstantiationException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        });
+
+
+
 
         /*ArrayList<String> commandLine = new ArrayList<String>();
         commandLine.add("ping 8.8.8.8");
@@ -95,17 +128,21 @@ public class MainActivity extends ActionBarActivity {
 */
 
 
+
+        /*
+        working
+
         //todo: live output
         //todo: native commands without adding
         //todo: do commands as async tasks
 
-        NativeCommand ping = new NativeCommand("ping","ping");
-        NativeCommand df = new NativeCommand("df","df");
-        NativeCommand ls = new NativeCommand("ls","ls");
-        NativeCommand traceroute = new NativeCommand("traceroute","traceroute");
-        NativeCommand nslookup = new NativeCommand("netstat","netstat");
+        NativeCommand_dep ping = new NativeCommand_dep("ping","ping");
+        NativeCommand_dep df = new NativeCommand_dep("df","df");
+        NativeCommand_dep ls = new NativeCommand_dep("ls","ls");
+        NativeCommand_dep traceroute = new NativeCommand_dep("traceroute","traceroute");
+        NativeCommand_dep nslookup = new NativeCommand_dep("netstat","netstat");
 
-        CommandsManager cm = new CommandsManager();
+        CommandsManager_dep cm = new CommandsManager_dep();
         cm.registerCommand(ping);
         cm.registerCommand(df);
         cm.registerCommand(ls);
@@ -114,7 +151,7 @@ public class MainActivity extends ActionBarActivity {
 
         Log.d("TESTING REGISTER", cm.getAvailableCommands());
 
-        Command my = cm.getCommand("ping");
+        Command_dep my = cm.getCommand("ping");
 
         List<String> args = new ArrayList<String>();
         args.add("-c");
@@ -126,7 +163,7 @@ public class MainActivity extends ActionBarActivity {
         Log.d("TESTING RET VALUE", String.valueOf(my.getRetValue()));
         Log.d("TESTING OUTPUT", my.getOutput());
 
-        Command my2 = cm.getCommand("netstat");
+        Command_dep my2 = cm.getCommand("netstat");
         List<String> args2 = new ArrayList<>();
         args2.add("46.4.242.141");
         my2.execute(args2);
@@ -135,7 +172,7 @@ public class MainActivity extends ActionBarActivity {
         Log.d("TESTING OUTPUT", my2.getOutput());
 
 
-
+*/
 
        // executeCammand(); //todo: dobre
 /*
@@ -204,7 +241,7 @@ public class MainActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
+/*
     private String executeCommand(String command) {
 
         StringBuffer output = new StringBuffer();
@@ -259,4 +296,6 @@ public class MainActivity extends ActionBarActivity {
         }
         return false;
     }
+
+    */
 }
